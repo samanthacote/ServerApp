@@ -1,17 +1,31 @@
 import {shoes} from './data.js';
+import {leotards} from './data.js';
+import {costumes} from './data.js';
 
 const express = require('express');
 var bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
-const port = 3000;
+const port = 8000;
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 
 // helper functions
 const isValidShoe = (id) => {
     return((['flatSlippers', 'blochPointe', 'grishkoPointe'].includes(id)) ? true : false)
 };
 
+const isValidLeo = (id) => {
+    return((['meshBack', 'longSleeve', 'velvetRed'].includes(id)) ? true : false)
+};
+
+const isValidCostume = (id) => {
+    return((['whiteTulle', 'redTutu', 'lilacTutu'].includes(id)) ? true : false)
+};
 
 //CREATE A NEW REVIEW
 app.post('/shoes/:id/reviews', (req, res) => {
@@ -62,6 +76,40 @@ app.get('/shoes/:id*?/', (req, res) => {
     }
     else{
         res.json({shoes});
+    }
+}
+);
+
+//GET A LEOTARD
+app.get('/leotards/:id*?/', (req, res) => {
+    if(req.params.id){
+        if(isValidLeo(req.params.id)){
+            const leo = leotards.find((obj) => obj.id === req.params.id);
+            res.json(leo)
+        }
+        else {
+            res.status(400).send("That product does not exist. To view the list of products, visit localhost:3000/leotards/.");
+        }
+    }
+    else{
+        res.json({leotards});
+    }
+}
+);
+
+//GET A LEOTARD
+app.get('/costumes/:id*?/', (req, res) => {
+    if(req.params.id){
+        if(isValidCostume(req.params.id)){
+            const costume = costumes.find((obj) => obj.id === req.params.id);
+            res.json(costume)
+        }
+        else {
+            res.status(400).send("That product does not exist. To view the list of products, visit localhost:3000/costumes/.");
+        }
+    }
+    else{
+        res.json({costumes});
     }
 }
 );
