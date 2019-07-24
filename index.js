@@ -43,6 +43,19 @@ app.post('/shoes/:id/reviews', (req, res) => {
     res.json(shoe.reviews);
 });
 
+//CREATE A NEW SHOE
+app.post('/shoes/', (req, res) => {
+    let newShoe = {
+        id: req.body.id,
+        title: req.body.title, 
+        price: req.body.price,
+        reviews: [],
+        totalNumOfReviews: 0,
+    };
+    shoes.push(newShoe);
+    res.json(shoes);
+});
+
 //GET REVIEWS
 app.get('/shoes/:id/reviews/:reviewid*?/', (req, res) => {
     if(isValidShoe(req.params.id)){
