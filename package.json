@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec babel-node index.js",
-    "blah": "babel-node blah.js"
+    "seed": "babel-node ./seed/populateMongo.js"
   },
   "author": "Sam Cote",
   "license": "ISC",
@@ -19,6 +19,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongodb": "^3.3.0-beta2"
   }
 }
