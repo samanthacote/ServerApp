@@ -184,7 +184,7 @@ app.get('/shoes/:id*?/', (req, res) => {
 //GET A LEOTARD (with mongo data!!)
 app.get('/leotards/:id*?/', (req, res) => {
     MongoClient.connect(url, function(err, client) {
-        if(err) throw err;
+        if(err) throw err; 
         const db = client.db("mydb");
         if(req.params.id){
             if(isValidLeo(req.params.id)){
@@ -283,24 +283,21 @@ app.get('/costumes/:id*?/', (req, res) => {
 // });
 
 
-// //DELETE A REVIEW
-// app.delete('/shoes/:id/reviews/:reviewid/', (req, res) => {
-//     if(isValidShoe(req.params.id)){
-//         const reviewID = req.params.reviewid;
-//         const shoe = shoes.find((obj) => obj.id === req.params.id);
-//         if(shoe.totalNumOfReviews >= reviewID){
-//             shoe.reviews[reviewID - 1] = {
-//                 user: "Review has been recently deleted",
-//                 text: "Review has been recently deleted",
-//                 date: "Review has been recently deleted",
-//                 id: reviewID,
-//             };
-//             res.json(shoe.reviews);
+//DELETE A REVIEW
+// app.delete('/shoes/:id/reviews/:reviewuser/', (req, res) => {
+//     const reviewUser = req.params.reviewuser;
+//     MongoClient.connect(url, function(err, client) {
+//         if(err) throw err;
+//         console.log("Database connected!");
+//         const db = client.db("mydb");
+//         if(req.params.reviewuser){
+//             db.collection("shoes").update({id: req.params.id}, {$unset: {reviews: ""}});
 //         }
-//         else{
-//             res.status(400).send("A review with that ID number does not exist yet. To see the list of active reviews, see shoes/:id/reviews/.");
+//         else {
+//             res.status(400).send("Could not find user to delete review for.");
 //         }
-//     }
+//         client.close();
+//     });
 // });
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
